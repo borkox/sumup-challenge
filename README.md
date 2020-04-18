@@ -18,9 +18,12 @@ From the main folder of the application, execute this in a shell:
  
 ### Order tasks
 
-> POST
-> /api/job/tasksInOrder
-
+```
+POST http://localhost:8080/api/job/tasksInOrder
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+```
 payload:
 
 ```json
@@ -80,9 +83,12 @@ Response example:
 ```
  
 ### Tasks as bash script
-> POST
-> /api/job/tasksAsBash
-  
+```
+POST http://localhost:8080/api/job/tasksAsBash
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+```  
 payload:
 
 ```json
