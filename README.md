@@ -1,29 +1,83 @@
-# README #
+# SumUp code challenge variant 1
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### build
 
-### What is this repository for? ###
+>mvn clean install
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+### start the application
 
-### How do I get set up? ###
+> java -jar target/task1a-0.0.1-SNAPSHOT.jar
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### test the app
 
-### Contribution guidelines ###
+From the main folder of the application, execute this in a shell:
+ >curl -v -d @src/test/resources/example.json http://localhost:8080/api/job/tasksAsBash|bash
+ 
+ ## Rest services
+ 
+ 
+ ### ordered tasks of bash
+ > PUT
+ > /api/job/tasksInOrder
 
-* Writing tests
-* Code review
-* Other guidelines
+payload:
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+ ```json
+ {
+   "tasks":[
+     {
+       "name":"task-1",
+       "command":"touch /tmp/file1"
+     },
+     {
+       "name":"task-2",
+       "command":"cat /tmp/file1",
+       "requires":[
+         "task-3"
+       ]
+     },
+     {
+       "name":"task-3",
+       "command":"echo 'Hello World!' > /tmp/file1",
+       "requires":[
+         "task-1"
+       ]
+     },
+     {
+       "name":"task-4",
+       "command":"rm /tmp/file1",
+       "requires":[
+         "task-2",
+         "task-3"
+       ]
+     }
+   ]
+ 
+ }
+ ```
+ Response example:
+ ```json
+[
+  {
+    "name": "task-1",
+    "command": "touch /tmp/file1"
+  },
+  {
+    "name": "task-3",
+    "command": "echo 'Hello World!' > /tmp/file1"
+  },
+  {
+    "name": "task-2",
+    "command": "cat /tmp/file1"
+  },
+  {
+    "name": "task-4",
+    "command": "rm /tmp/file1"
+  }
+]
+```
+ 
+  ### returns the bash script
+  > PUT
+  > /api/job/tasksAsBash
+  
